@@ -11,6 +11,7 @@
         android:theme="@style/Theme.StoneMixApp">
         <activity
             android:name=".MainActivity"
+            android:theme="@style/splash_theme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
