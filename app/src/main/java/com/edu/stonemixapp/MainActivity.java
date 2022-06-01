@@ -15,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         //soy jose barrientos
+        //Soy MIGUEL
         //hacemos que despues de cargar la pantalla de carga se muestre la pantalla normal
         setTheme(R.style.Theme_StoneMixApp);
 
