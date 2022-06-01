@@ -10,11 +10,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         //Ponemos un thread para que la pantalla de carga dure 2 segundos
         try {
-            Thread.sleep(2000);
+            Thread.sleep(4000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
+        //soy jose barrientos
         //hacemos que despues de cargar la pantalla de carga se muestre la pantalla normal
         setTheme(R.style.Theme_StoneMixApp);
 
