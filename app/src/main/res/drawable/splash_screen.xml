@@ -4,6 +4,7 @@
     <item android:drawable="@color/white"/>
     <!--Imagen-->
     <item >
+
         <bitmap
             android:gravity="center"
             android:src="@drawable/stoneredim"
