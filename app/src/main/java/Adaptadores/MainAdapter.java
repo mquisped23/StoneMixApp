@@ -51,17 +51,17 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel,MainAdapter.m
         return new myViewHolder(view);
     }
 
-    class myViewHolder extends RecyclerView.ViewHolder{
+    static class myViewHolder extends RecyclerView.ViewHolder{
         CircleImageView img;
         TextView nombrePro, descripcionPro, cantidadPro;
         //Constructor de myViewHolder
         public myViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            img = (CircleImageView) itemView.findViewById(R.id.img1);
-            nombrePro  = (TextView) itemView.findViewById(R.id.nametext);
-            descripcionPro  = (TextView) itemView.findViewById(R.id.descripciontext);
-            cantidadPro  = (TextView) itemView.findViewById(R.id.cantidadtext);
+            img =  itemView.findViewById(R.id.img1);
+            nombrePro  =  itemView.findViewById(R.id.nametext);
+            descripcionPro  =  itemView.findViewById(R.id.descripciontext);
+            cantidadPro  =  itemView.findViewById(R.id.cantidadtext);
 
         }
     }
