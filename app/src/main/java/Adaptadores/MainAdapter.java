@@ -1,5 +1,6 @@
 package Adaptadores;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,27 +10,40 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.model.Model;
 import com.edu.stonemixapp.R;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 
+import java.util.ArrayList;
+
 import Model.MainModel;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class MainAdapter extends FirebaseRecyclerAdapter<MainModel,MainAdapter.myViewHolder> {
+public class MainAdapter extends RecyclerView.Adapter<MainAdapter.myViewHolder> {
 
-    /**
-     * Initialize a {@link RecyclerView.Adapter} that listens to a Firebase query. See
-     * {@link FirebaseRecyclerOptions} for configuration options.
-     *
-     * @param options
-     */
-    public MainAdapter(@NonNull FirebaseRecyclerOptions<MainModel> options) {
-        super(options);
+    ArrayList<MainModel> lista;
+    Context context;
+
+    public MainAdapter(Context context,ArrayList<MainModel> lista ) {
+        this.context = context;
+        this.lista = lista;
+
+    }
+
+    @NonNull
+    @Override
+    public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        //en este apartado estoy haciendo que se pueda mostrar el layout main_item con el inflate
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_item,parent,false);
+        return new myViewHolder(view);
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull myViewHolder holder, int position, @NonNull MainModel model) {
+    public void onBindViewHolder(@NonNull myViewHolder holder, int position) {
+
+        MainModel model  = lista.get(position);
+
         holder.nombrePro.setText(model.getNombreMaterial());
         holder.descripcionPro.setText(model.getDescripcionMaterial());
         holder.cantidadPro.setText(model.getCantidadMaterial());
@@ -43,15 +57,15 @@ public class MainAdapter extends FirebaseRecyclerAdapter<MainModel,MainAdapter.m
 
     }
 
-    @NonNull
     @Override
-    public myViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        //en este apartado estoy haciendo que se pueda mostrar el layout main_item con el inflate
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.main_item,parent,false);
-        return new myViewHolder(view);
+    public int getItemCount() {
+        return lista.size();
     }
 
-    static class myViewHolder extends RecyclerView.ViewHolder{
+
+
+
+    public static class myViewHolder extends RecyclerView.ViewHolder{
         CircleImageView img;
         TextView nombrePro, descripcionPro, cantidadPro;
         //Constructor de myViewHolder

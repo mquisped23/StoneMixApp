@@ -49,23 +49,50 @@ public class MainActivity extends AppCompatActivity {
         ///--------------------------------------------------------///
 
 
-
-
         //Ahora guardo el valor de mi recycler view en la variable recyclerView
         recyclerView =  findViewById(R.id.rv);
         //Aqui hacemos que el recyclerView este en linea    r layout, y predeterminamente esto es vertical
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        mainAdapter = new MainAdapter(this, lista);
 
-        FirebaseRecyclerOptions<MainModel> options = new FirebaseRecyclerOptions.Builder<MainModel>()
-                .setQuery(root, MainModel.class).build();
-
-
-
-        mainAdapter = new MainAdapter(options);
-        mainAdapter.notifyDataSetChanged();
         recyclerView.setAdapter(mainAdapter);
 
+        root.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    lista.clear();
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+
+                        MainModel modelito =  new MainModel();
+                        modelito = ds.getValue(MainModel.class);
+                        String nombre = (String) ds.child("nombre").getValue();
+                        String descripcion = (String) ds.child("descripcion").getValue();
+                        String cantidad = (String) ds.child("cantidad").getValue();
+                        String url = (String) ds.child("url").getValue();
+
+                        modelito.setNombreMaterial(nombre);
+                        modelito.setDescripcionMaterial(descripcion);
+                        modelito.setCantidadMaterial(cantidad);
+                        modelito.setUrlMaterial(url);
+
+                        lista.add(modelito);
+                        System.out.println("el n" +modelito.getNombreMaterial() );
+                        System.out.println("el n" + modelito.getDescripcionMaterial());
+                        System.out.println("el n" + modelito.getCantidadMaterial());
+                        System.out.println("el n" + modelito.getUrlMaterial());
+
+                    }
+                    mainAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 
     }
 
@@ -107,18 +134,6 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-    @Override
-    protected  void onStart(){
-        super.onStart();
-        mainAdapter.startListening();
-    }
-
-    @Override
-    protected  void onStop(){
-        super.onStop();
-        mainAdapter.stopListening();
-    }
 
 
 
