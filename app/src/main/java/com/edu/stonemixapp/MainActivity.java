@@ -12,6 +12,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
@@ -19,10 +20,15 @@ import java.util.ArrayList;
 import Adaptadores.MainAdapter;
 import Model.MainModel;
 
+
 public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     MainAdapter mainAdapter;
     DatabaseReference databaseReference;
+
+    private FirebaseDatabase db=FirebaseDatabase.getInstance();
+    private DatabaseReference root=db.getReference().child("Materiales");
+
     ArrayList<MainModel> lista = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +48,9 @@ public class MainActivity extends AppCompatActivity {
 
         ///--------------------------------------------------------///
 
+
+
+
         //Ahora guardo el valor de mi recycler view en la variable recyclerView
         recyclerView =  findViewById(R.id.rv);
         //Aqui hacemos que el recyclerView este en linea    r layout, y predeterminamente esto es vertical
@@ -49,26 +58,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         FirebaseRecyclerOptions<MainModel> options = new FirebaseRecyclerOptions.Builder<MainModel>()
-                .setQuery(FirebaseDatabase.getInstance("https://stonemix-f5c00-default-rtdb.firebaseio.com/")
-                        .getReference().child("Materiales"), MainModel.class)
-                .build();
-
-        for (MainModel m : lista){
-            System.out.println("respuesta"+m.getNombreMaterial());
-            System.out.println(m.getDescripcionMaterial());
-            System.out.println(m.getCantidadMaterial());
-            System.out.println(m.getUrlMaterial());
-        }
-
-        //Metodo
-
+                .setQuery(root, MainModel.class).build();
 
 
 
         mainAdapter = new MainAdapter(options);
+        mainAdapter.notifyDataSetChanged();
         recyclerView.setAdapter(mainAdapter);
 
-        listarDatos();
+
     }
 
     public void listarDatos() {
@@ -78,13 +76,22 @@ public class MainActivity extends AppCompatActivity {
                             if(snapshot.exists()){
                                 lista.clear();
                                 for (DataSnapshot ds : snapshot.getChildren()) {
+                                    MainModel modelito =  new MainModel();
+                                    String nombre = (String) ds.child("nombre").getValue();
+                                    String descripcion = (String) ds.child("descripcion").getValue();
+                                    String cantidad = (String) ds.child("cantidad").getValue();
+                                    String url = (String) ds.child("url").getValue();
 
-                                    String nombre = ds.child("nombre").getValue().toString();
-                                    String descripcion = ds.child("descripcion").getValue().toString();
-                                    String categoria = ds.child("cantidad").getValue().toString();
-                                    String url = ds.child("url").getValue().toString();
+                                    modelito.setNombreMaterial(nombre);
+                                    modelito.setDescripcionMaterial(descripcion);
+                                    modelito.setCantidadMaterial(cantidad);
+                                    modelito.setUrlMaterial(url);
 
-                                    lista.add(new MainModel( "nombre","descripcion","categoria","url"));
+                                    lista.add(modelito);
+                                    System.out.println("el n" +modelito.getNombreMaterial() );
+                                    System.out.println("el n" + modelito.getDescripcionMaterial());
+                                    System.out.println("el n" + modelito.getCantidadMaterial());
+                                    System.out.println("el n" + modelito.getUrlMaterial());
 
                                 }
                             }
