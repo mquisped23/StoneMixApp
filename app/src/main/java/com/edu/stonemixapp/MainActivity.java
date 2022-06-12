@@ -78,10 +78,7 @@ public class MainActivity extends AppCompatActivity {
                         modelito.setUrlMaterial(url);
 
                         lista.add(modelito);
-                        System.out.println("el n" +modelito.getNombreMaterial() );
-                        System.out.println("el n" + modelito.getDescripcionMaterial());
-                        System.out.println("el n" + modelito.getCantidadMaterial());
-                        System.out.println("el n" + modelito.getUrlMaterial());
+
 
                     }
                     mainAdapter.notifyDataSetChanged();
@@ -96,40 +93,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void listarDatos() {
-        databaseReference = FirebaseDatabase.getInstance().getReference();
-        databaseReference.child("Materiales").addValueEventListener(new ValueEventListener() {
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if(snapshot.exists()){
-                                lista.clear();
-                                for (DataSnapshot ds : snapshot.getChildren()) {
-                                    MainModel modelito =  new MainModel();
-                                    String nombre = (String) ds.child("nombre").getValue();
-                                    String descripcion = (String) ds.child("descripcion").getValue();
-                                    String cantidad = (String) ds.child("cantidad").getValue();
-                                    String url = (String) ds.child("url").getValue();
-
-                                    modelito.setNombreMaterial(nombre);
-                                    modelito.setDescripcionMaterial(descripcion);
-                                    modelito.setCantidadMaterial(cantidad);
-                                    modelito.setUrlMaterial(url);
-
-                                    lista.add(modelito);
-                                    System.out.println("el n" +modelito.getNombreMaterial() );
-                                    System.out.println("el n" + modelito.getDescripcionMaterial());
-                                    System.out.println("el n" + modelito.getCantidadMaterial());
-                                    System.out.println("el n" + modelito.getUrlMaterial());
-
-                                }
-                            }
-
-                        }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-    }
 
 
 
