@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">StoneMixApp</string>
+    <string name="txt_nuevo_material_titulo">Nuevo Material</string>
 </resources>

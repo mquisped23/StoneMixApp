@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.edu.stonemixapp">
-    <!--Esto es un permiso al inciar la aplicacion-->
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Esto es un permiso al inciar la aplicacion -->
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -12,9 +12,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.StoneMixApp">
         <activity
+            android:name=".AddActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
-            android:theme="@style/splash_theme"
-            android:exported="true">
+            android:exported="true"
+            android:theme="@style/splash_theme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
