@@ -110,10 +110,28 @@
                     android:textColor="#9E000000"
                     android:textSize="25dp"
                     android:textStyle="bold" />
-
-
             </LinearLayout>
-
+            <!--Linear layout de botones-->
+            <LinearLayout
+                android:layout_below="@+id/cantidadtext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <Button
+                    android:layout_width="133dp"
+                    android:layout_height="wrap_content"
+                    android:text="Editar"
+                    android:textAllCaps="false"
+                    android:layout_marginRight="5dp"
+                    android:id="@+id/btnEdit"/>
+                <Button
+                    android:layout_width="133dp"
+                    android:layout_height="wrap_content"
+                    android:text="Borrar"
+                    android:textAllCaps="false"
+                    android:layout_marginLeft="5dp"
+                    android:id="@+id/btnDelete"/>
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>

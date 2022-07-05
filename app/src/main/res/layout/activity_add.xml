@@ -126,7 +126,7 @@
                 android:id="@+id/txtDescripcionMaterial"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:hint="Descripcion"
+                android:hint="Descripción"
 
                 android:textColor="@color/black" />
 
