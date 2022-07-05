@@ -47,7 +47,7 @@ public class MainAdapter extends RecyclerView.Adapter<MainAdapter.myViewHolder> 
         holder.nombrePro.setText(model.getNombreMaterial());
         holder.descripcionPro.setText(model.getDescripcionMaterial());
         holder.cantidadPro.setText(model.getCantidadMaterial());
-        //Debo investigar esto para que sirve
+
         Glide.with(holder.img.getContext())
                 .load(model.getUrlMaterial())
                 .placeholder(com.google.android.gms.base.R.drawable.common_google_signin_btn_icon_dark)

@@ -3,6 +3,7 @@ package com.edu.stonemixapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -16,11 +17,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.pedant.SweetAlert.SweetAlertDialog;
+
 public class AddActivity extends AppCompatActivity {
 
     EditText nombreMaterial,cantidadMaterial,descripcionMaterial,urlMaterial;
     Button btnAdd, btnBack;
-
+    SweetAlertDialog alerta;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +41,9 @@ public class AddActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 insertData();
-                clearAll();
+
+                //Codigo al presionar que me mande al activity add
+
             }
         });
 
@@ -59,22 +64,46 @@ public class AddActivity extends AppCompatActivity {
         map.put("descripcionMaterial",descripcionMaterial.getText().toString());
         map.put("urlMaterial",urlMaterial.getText().toString());
 
-        FirebaseDatabase.getInstance().getReference().child("materiales").push()
-                .setValue(map)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Toast.makeText(AddActivity.this, "Data Insert Successfully.", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Toast.makeText(AddActivity.this, "Error while Insertion.", Toast.LENGTH_SHORT).show();
-                    }
-                });
+        if(nombreMaterial.getText().toString().trim().equals("") || cantidadMaterial.getText().toString().trim().equals("")
+                || descripcionMaterial.getText().toString().trim().equals("") || urlMaterial.getText().toString().trim().equals("")){
+            new SweetAlertDialog(AddActivity.this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Error")
+                    .setContentText("Completar campos vacios")
+                    .show();
+            return;
 
-    }
+        }else if(nombreMaterial.getText().toString().trim().equals("") && !cantidadMaterial.getText().toString().trim().equals("")
+                    && !descripcionMaterial.getText().toString().trim().equals("")
+                        && !urlMaterial.getText().toString().trim().equals("")){
+            new SweetAlertDialog(AddActivity.this, SweetAlertDialog.WARNING_TYPE)
+                    .setTitleText("Error")
+                    .setContentText("Completar campo de nombre")
+                    .show();
+                return;
+            }else {
+
+                FirebaseDatabase.getInstance().getReference().child("materiales").push()
+                        .setValue(map)
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                new SweetAlertDialog(AddActivity.this, SweetAlertDialog.SUCCESS_TYPE)
+                                        .setTitleText("Correcto")
+                                        .setContentText("Datos Agregados")
+                                        .show();
+                                clearAll();
+                                startActivity(new Intent(getApplicationContext(),MainActivity.class));
+                            }
+                        })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(AddActivity.this, "Error while Insertion.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }//termino del else
+
+    }//Termino del metodo insertData
     private void clearAll()
     {
         nombreMaterial.setText("");

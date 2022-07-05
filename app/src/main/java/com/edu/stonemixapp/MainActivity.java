@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton floatingActionButton;
 
     private FirebaseDatabase db=FirebaseDatabase.getInstance();
-    private DatabaseReference root=db.getReference().child("Materiales");
+    private DatabaseReference root=db.getReference().child("materiales");
 
     ArrayList<MainModel> lista = new ArrayList<>();
     @Override
@@ -73,10 +73,10 @@ public class MainActivity extends AppCompatActivity {
 
                         MainModel modelito =  new MainModel();
                         modelito = ds.getValue(MainModel.class);
-                        String nombre = (String) ds.child("nombre").getValue();
-                        String descripcion = (String) ds.child("descripcion").getValue();
-                        String cantidad = (String) ds.child("cantidad").getValue();
-                        String url = (String) ds.child("url").getValue();
+                        String nombre = (String) ds.child("nombreMaterial").getValue();
+                        String descripcion = (String) ds.child("descripcionMaterial").getValue();
+                        String cantidad = (String) ds.child("cantidadMaterial").getValue();
+                        String url = (String) ds.child("urlMaterial").getValue();
 
                         modelito.setNombreMaterial(nombre);
                         modelito.setDescripcionMaterial(descripcion);
